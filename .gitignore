@@ -1,0 +1,12 @@
+node_modules
+dist
+.wrangler
+.dev.vars*
+*.log
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Vite 临时时间戳文件
+vite.config.ts.timestamp-*.mjs
