@@ -5,13 +5,22 @@ import { ROUTES } from '../lib/site'
 /**
  * Hero 背景视频。
  *
- * 随静态资源一起打包部署到 Cloudflare Workers（`public/hero.mp4`）——
- * 与站点同域、由 Cloudflare 全球 CDN 分发，不依赖任何第三方外链。
+ * 随静态资源一起打包部署（`public/hero.mp4`）——
+ * 与站点同域、由 CDN 分发，不依赖任何第三方外链。
  *
  * 已弃用的外部地址（保留备查）：
  * https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/avideo%20preview/byzm6mnvgu.mp4
  */
 const HERO_VIDEO = '/hero.mp4'
+
+/**
+ * 视频首帧封面。
+ *
+ * 移动端（尤其 iOS 低电量模式 / 部分安卓内核）会阻止自动播放，
+ * 没有封面就会露出黑块。用首帧占位可保证首屏永不白屏。
+ * 更换视频时需同步重新抽帧覆盖 `public/hero-poster.jpg`。
+ */
+const HERO_POSTER = '/hero-poster.jpg'
 
 const brands = [
   {
@@ -120,11 +129,14 @@ export default function HeroSection() {
       >
         <video
           className="object-cover absolute inset-0 w-full h-full"
+          style={{ backgroundColor: '#f5f5f5' }}
           src={HERO_VIDEO}
+          poster={HERO_POSTER}
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
         />
 
         <div className="relative z-10 flex flex-col items-start justify-start h-full p-12 pt-36">
